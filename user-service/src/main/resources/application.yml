@@ -1,6 +1,7 @@
 management:
   health:
-    circuitbreakers:
+    circuit-breakers:
+    #circuitbreakers:
       enabled: true
   endpoints:
     web:
@@ -12,16 +13,17 @@ management:
 
 
 resilience4j:
-  circuitbreaker:
+  circuit breaker:
+  #circuitbreaker:
     instances:
       userService:
         registerHealthIndicator: true
         eventConsumerBufferSize: 10
-        failureRateThreshold: 50
+        failureRateThreshold: 50 #if 50 request failed then change the status to open
         minimumNumberOfCalls: 5
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 5s
-        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true #transition happen automatically from open to half open after 5s for ex
+        waitDurationInOpenState: 5s #status change from open to half open
+        permittedNumberOfCallsInHalfOpenState: 3 # allow 3 calls in half open and after 3 cals it will change to the close if success
         slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
 
@@ -29,8 +31,8 @@ resilience4j:
   retry:
     instances:
       userService:
-        maxRetryAttempts: 5
-        waitDuration: 10s
+        maxRetryAttempts: 5 # real time keep it as 3
+        waitDuration: 10s # real time keep it as 2
 
 
 
